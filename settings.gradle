@@ -1,0 +1,8 @@
+rootProject.name = 'demo6camunda'
+
+include 'asharedlib'
+include 'payment'
+include 'inventory'
+include 'shipment'
+include 'order'
+
