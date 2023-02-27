@@ -48,6 +48,7 @@ public class PaymentPay implements JavaDelegate {
                 // Expected (business) errors
                 logger.log("ERROR! PaymentPay received expected error code %s, message %s",
                            response.statusCode(), response.body());
+                execution.setVariable(MainOrderService.FAILURE_REASON, response.body());
                 throw new BpmnError(MainOrderService.DO_NOT_RETRY,
                                     String.format("Business Validation error in Payment service %s", response.body()));
             case HttpURLConnection.HTTP_OK:

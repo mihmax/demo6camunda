@@ -19,7 +19,8 @@ public class OrderController {
 
     private final MainOrderService orderService;
 
-    public OrderController(LogRepository logRepository, OrderRepository orderRepository, MainOrderService orderService) {
+    public OrderController(LogRepository logRepository, OrderRepository orderRepository,
+                           MainOrderService orderService) {
         this.logRepository = logRepository;
         this.orderRepository = orderRepository;
         this.orderService = orderService;
@@ -29,58 +30,60 @@ public class OrderController {
     public String index() {
         return """
                 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Demo5 with Temporal</title>
-</head>
-<body>
-<h3>Demo5 with Temporal</h3>
-<p>SAGA Orchestration using <a href="https://temporal.io">Temporal.io</a></p>
-<ul>
-    <li><a href="/list">List all executed orders</a></li>
-    <li><a href="/log">Application log</a></li>
-</ul>
+                <html lang="en">
+                <head>
+                    <title>Demo5 on Camunda</title>
+                </head>
+                <body>
+                <h3>Demo6 on Camunda Platform 7</h3>
+                <p>SAGA Orchestration using <a href="https://docs.camunda.org/get-started/">Camunda Platform 7</a></p>
+                <ul>
+                    <li><a href="/list">List all executed orders</a></li>
+                    <li><a href="/log">Application log</a></li>
+                    <li><a href="/camunda/app/cockpit/">Camunda Cockpit</a> (user 'demo', password 'demo')</li>
+                </ul>
 
-<form action="/order" method="get">
-    <table>
-        <thead>
-        <tr>
-            <td><b>Order</b></td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><label for="user">User:</label></td>
-            <td>
-                <select id="user" name="user">
-                    <option value="user1">User 1</option>
-                    <option value="user2">User 2</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td><label for="goods">Goods item:</label></td>
-            <td>
-                <select id="goods" name="goods" onchange="updateAmount()">
-                    <option value="item1">Item 1</option>
-                    <option value="item2">Item 2</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td><label for="quantity">Quantity:</label></td>
-            <td><input id="quantity" name="quantity" type="text" onchange="updateAmount()"/></td>
-        </tr>
-        <tr>
-            <td><input id="submit" type="submit"/></td>
-        </tr>
-        </tbody>
-    </table>
-</form>
-</body>
-</html>
-                """;
+                <form action="/order" method="get">
+                    <table>
+                        <thead>
+                        <tr>
+                            <td><b>Order</b></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><label for="user">User:</label></td>
+                            <td>
+                                <select id="user" name="user">
+                                    <option value="user1">User 1</option>
+                                    <option value="user2">User 2</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="goods">Goods item:</label></td>
+                            <td>
+                                <select id="goods" name="goods" onchange="updateAmount()">
+                                    <option value="item1">Item 1</option>
+                                    <option value="item2">Item 2</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="quantity">Quantity:</label></td>
+                            <td><input id="quantity" name="quantity" type="text" onchange="updateAmount()"/></td>
+                        </tr>
+                        <tr>
+                            <td><input id="submit" type="submit"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+                </body>
+                </html>
+                                """;
     }
+
     @GetMapping("/list")
     public String list() {
         return String.format("""

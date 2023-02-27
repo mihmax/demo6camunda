@@ -28,6 +28,7 @@ public class MainOrderService implements ExecutionListener {
     public static final String VARIABLE_PAYMENT_ID = "paymentId";
     private static final String ORDER_WORKFLOW_NAME = "OrderWorkflow";
     public static final String DO_NOT_RETRY = "DoNotRetry";
+    public static final String FAILURE_REASON = "failureReason";
     @Autowired
     private ProcessEngine camunda;
 
@@ -74,7 +75,7 @@ public class MainOrderService implements ExecutionListener {
                                                          VARIABLE_USER, user,
                                                          VARIABLE_GOODS, goods,
                                                          VARIABLE_QUANTITY, quantity));
-        orderRepository.updateOrderStatus(order.id(), OrderStatus.INITIATED);
+        orderRepository.updateOrderStatus(order.id(), OrderStatus.INITIATED, "");
         return order.id();
     }
 
@@ -84,9 +85,9 @@ public class MainOrderService implements ExecutionListener {
         UUID orderId = (UUID) execution.getVariable(VARIABLE_ORDER_ID);
         if (execution.getCurrentActivityName().contains(DO_NOT_RETRY)) {
             // Ending via compensation flow due to error
-            orderRepository.updateOrderStatus(orderId, OrderStatus.FAILED);
+            orderRepository.updateOrderStatus(orderId, OrderStatus.FAILED, String.valueOf(execution.getVariable(FAILURE_REASON)));
         } else {
-            orderRepository.updateOrderStatus(orderId, OrderStatus.SUCCEEDED);
+            orderRepository.updateOrderStatus(orderId, OrderStatus.SUCCEEDED, "");
         }
     }
 }

@@ -19,10 +19,12 @@ public class ShipmentShip implements JavaDelegate {
     @Override
     public void execute(DelegateExecution execution) throws Exception {
         logger.log("ShipmentShip called with %s", execution.getVariables());
-        logger.log("Triggering UnsupportedOperationException");
         if (Context.getJobExecutorContext().getCurrentJob().getRetries()<=1) {
+            logger.log("No more tries!!! Triggering BpmnError to stop retrying");
+            execution.setVariable(MainOrderService.FAILURE_REASON, "Shipment Service is not implemented");
             throw new BpmnError(MainOrderService.DO_NOT_RETRY);
         }
+        logger.log("Shipment not implemented! So Saga will fail.");
         throw new UnsupportedOperationException("Shipment not implemented");
     }
 }

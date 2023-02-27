@@ -15,3 +15,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.data:spring-data-commons'
 }
+
+bootRun {
+	enabled = false
+}

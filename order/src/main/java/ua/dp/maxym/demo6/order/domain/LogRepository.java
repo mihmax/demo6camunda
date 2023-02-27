@@ -7,7 +7,9 @@ import java.util.Date;
 public interface LogRepository extends MongoRepository<Log, String> {
 
     default void log(String logMessage, Object... args) {
-        insert(new Log(new Date(), String.format(logMessage, args)));
+        var formattedMessage = String.format(logMessage, args);
+        System.out.println(formattedMessage);
+        insert(new Log(new Date(), formattedMessage));
     }
 
 }

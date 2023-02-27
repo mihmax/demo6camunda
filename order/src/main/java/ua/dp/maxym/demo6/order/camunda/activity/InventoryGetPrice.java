@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import ua.dp.maxym.demo6.order.camunda.MainOrderService;
 import ua.dp.maxym.demo6.order.domain.LogRepository;
 import ua.dp.maxym.demo6.order.domain.OrderRepository;
-import ua.dp.maxym.demo6.order.domain.OrderStatus;
 
 import java.net.HttpURLConnection;
 import java.net.URI;
@@ -48,6 +47,7 @@ public class InventoryGetPrice implements JavaDelegate {
                 // Expected (business) errors
                 logger.log("ERROR! InventoryGetPrice received expected error code %s, message %s",
                            response.statusCode(), response.body());
+                execution.setVariable(MainOrderService.FAILURE_REASON, String.format("ERROR! InventoryGetPrice received expected error code %s, message %s",response.statusCode(), response.body()));
                 throw new BpmnError(MainOrderService.DO_NOT_RETRY,
                         String.format("Business Validation error in Inventory service %s", response.body()));
             case HttpURLConnection.HTTP_OK:

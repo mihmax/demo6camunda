@@ -8,9 +8,9 @@ import java.util.UUID;
 
 public interface OrderRepository extends MongoRepository<Order, UUID> {
 
-    default void updateOrderStatus(UUID orderId, OrderStatus orderStatus) {
+    default void updateOrderStatus(UUID orderId, OrderStatus orderStatus, String statusReason) {
         Order order = getOrder(orderId);
-        Order updatedOrder = new Order(order.id(), orderStatus, order.statusReason(), order.user(), order.goods(),
+        Order updatedOrder = new Order(order.id(), orderStatus, statusReason, order.user(), order.goods(),
                                        order.quantity(), order.price());
         save(updatedOrder);
     }
